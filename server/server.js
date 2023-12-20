@@ -1,9 +1,13 @@
 //  when testing we run nodemon so that we don't always have to start the server by node filename.js
 // just relaized I could have just used vite instead of nodemon 
+
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
+const db = require("./db")
+
+
 
 app.use(express.json())
 
