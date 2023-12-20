@@ -12,28 +12,41 @@ const db = require("./db")
 app.use(express.json())
 
 //get all resturants
-app.get("/api/v1/restaurants", (req, res) => {
-    console.log('middleware worked');
-    res.status(200).json({
-        status: "sucess",
-        data:{
-            restaurants:["mcdonalds","wendys"],
-        },
-    });
+app.get("/api/v1/restaurants",async  (req, res) => {
+    try {
+        const results = await db.query("Select * from restaurants")
+        res.status(200).json({
+            status: "sucess",
+            results: results.rows.length,
+            data:{
+                restaurants:results.rows,
+            },
+        });
+    } catch (error) {
+        console.log(err)
+    }
 });
 
 // get single restaurants
 
-app.get("/api/v1/restaurants/:id", (req, res) => {
-    console.log(req.params)
+app.get("/api/v1/restaurants/:id", async (req, res) => {
+    console.log(req.params.id)
 
-    res.status(200).json({
+    try {
+        const results = await db.query("Select * from restaurants where id = $1", [req.params.id])
+        
+        res.status(200).json({
         status: "sucess",
         data:{
-            restaurant: "mcdonalds"
+            restaurant: results.rows[0]
         }
-    })
+        })
+    } catch (err) {
+        console.log(err)
+    }
+    
 });
+
 
 //create
 app.post("/api/v1/restaurants", (req,res)=>{
@@ -44,6 +57,7 @@ app.post("/api/v1/restaurants", (req,res)=>{
             restaurant: "mcdonalds"
         }
     })
+    
 })
 
 //update
