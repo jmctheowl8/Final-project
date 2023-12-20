@@ -43,7 +43,7 @@ app.post("/api/v1/restaurants", (req,res)=>{
 })
 
 //update
-app.put("/api/v1/restaurants/:id", (req,req) => {
+app.put("/api/v1/restaurants/:id", (req,res) => {
     console.log(req.params.id);
     console.log(body)
     res.status(200).json({
@@ -56,7 +56,7 @@ app.put("/api/v1/restaurants/:id", (req,req) => {
 
 //delete
 
-app.delete("/api/v1/restaurants/:id", (req,req) => {
+app.delete("/api/v1/restaurants/:id", (req,res) => {
     res.status(200).json({
         status: "sucess"
     })
